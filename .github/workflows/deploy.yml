@@ -1,0 +1,63 @@
+name: Deploy the web edition to GitHub Pages
+
+# The content is generated in the private source repository and pushed here
+# by mystmd/scripts/publish.sh; this workflow only builds and deploys it.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  BASE_URL: /${{ github.event.repository.name }}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - uses: oven-sh/setup-bun@v2
+      - name: Install MyST Markdown (QuantEcon fork, qe-v14)
+        # The same renderer the book's checks were run against: book-mode
+        # numbering, shared and section-scoped proof counters, (i)/(a) list
+        # parsing. See https://github.com/QuantEcon/mystmd/blob/main/quantecon/README.md
+        working-directory: /tmp
+        run: |
+          git clone https://github.com/QuantEcon/mystmd.git qe-mystmd
+          cd qe-mystmd
+          git checkout qe-v14
+          bun install
+          bun run build
+          npm install -g /tmp/qe-mystmd/packages/mystmd
+          myst --version
+      - name: Build HTML
+        run: myst build --html
+      - name: Default to the light theme
+        # The theme follows the reader's OS colour scheme unless they have
+        # used its toggle; dark mode does not suit the figures. This makes
+        # light the default and keeps the toggle working.
+        run: python3 .github/light_default.py _build/html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _build/html
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,188 @@
+version: 1
+project:
+  # (i)/(a) list markers: the fork parses them, book-theme renders every
+  # ordered list as 1., 2., ...; this plugin + fancy-lists.css draw the print
+  # markers. Copied from QuantEcon/book-dp2's mystmd/.
+  plugins:
+    - fancy-lists.mjs
+  title: "Economic Networks: Theory and Computation"
+  authors:
+    - name: Thomas J. Sargent
+    - name: John Stachurski
+  # The LaTeX source is private: the GitHub link points at the public repo
+  # the site is published from, and there is no edit link.
+  github: https://github.com/QuantEcon/book-networks.mystmd
+  edit_url: null
+  # The book as a PDF, copied in by scripts/publish.sh.
+  downloads:
+    - file: economic-networks.pdf
+      title: PDF version
+  bibliography:
+    - references.bib
+  # Book-mode numbering as in print: chapters 1-5, then the appendix as
+  # chapter 6 under the part "Appendices". Theorem-likes are numbered within
+  # sections, and lemma, proposition and corollary share the theorem counter
+  # (preamble.tex: \newtheorem{lemma}[theorem]{Lemma}); exercises are numbered
+  # within sections too (\counterwithin{Exercise}{section}).
+  numbering:
+    book:
+      enabled: true
+    chapters:
+      label: "Chapter %s"
+    proof:
+      scope: section
+    proof:lemma:       { counter: theorem }
+    proof:proposition: { counter: theorem }
+    proof:corollary:   { counter: theorem }
+    exercise:
+      scope: section
+    code:
+      continue: true
+      template: "Listing %s"
+    proof:algorithm:
+      continue: true
+  toc:
+    - file: index.md
+    - title: Front Matter
+      section: frontmatter
+      children:
+        - file: ch_preface.md
+          title: Preface
+        - file: common_symbols.md
+          title: Common Symbols
+    - title: Chapters
+      section: chapters
+      children:
+        - file: ch_intro.md
+          title: Introduction
+        - file: ch_production.md
+          title: Production
+        - file: ch_opt.md
+          title: Optimal Flows
+        - file: ch_mcs.md
+          title: Markov Chains and Networks
+        - file: ch_fpms.md
+          title: Nonlinear Interactions
+    - title: Appendices
+      section: parts
+      children:
+        - file: appendix.md
+          title: Appendix
+  # Generated from ../preamble.tex (KaTeX: \mathbbm -> \mathbb).
+  math:
+    '\CC': '\mathbb{C}'
+    '\EE': '\mathbb{E}'
+    '\FF': '\mathbb{F}'
+    '\RR': '\mathbb{R}'
+    '\KK': '\mathbb{K}'
+    '\MM': '\mathbb{M}'
+    '\NN': '\mathbb{N}'
+    '\PP': '\mathbb{P}'
+    '\TT': '\mathbb{T}'
+    '\QQ': '\mathbb{Q}'
+    '\WW': '\mathbb{W}'
+    '\ZZ': '\mathbb{Z}'
+    '\II': '\mathbb{I}'
+    '\ii': '\mathbb{i}'
+    '\OO': '\mathbb{O}'
+    '\oo': '\mathbb{o}'
+    '\Asf': '\mathsf A'
+    '\Esf': '\mathsf E'
+    '\Fsf': '\mathsf F'
+    '\Gsf': '\mathsf G'
+    '\Msf': '\mathsf M'
+    '\Nsf': '\mathsf N'
+    '\Psf': '\mathsf P'
+    '\Qsf': '\mathsf Q'
+    '\Ssf': '\mathsf S'
+    '\Tsf': '\mathsf T'
+    '\Xsf': '\mathsf X'
+    '\Ysf': '\mathsf Y'
+    '\Vsf': '\mathsf V'
+    '\Zsf': '\mathsf Z'
+    '\aA': '\mathscr A'
+    '\bB': '\mathscr B'
+    '\cC': '\mathscr C'
+    '\dD': '\mathscr D'
+    '\eE': '\mathscr E'
+    '\gG': '\mathscr G'
+    '\hH': '\mathscr H'
+    '\iI': '\mathscr I'
+    '\fF': '\mathscr F'
+    '\lL': '\mathscr L'
+    '\pP': '\mathscr P'
+    '\rR': '\mathscr R'
+    '\sS': '\mathscr S'
+    '\vV': '\mathscr V'
+    '\mM': '\mathscr M'
+    '\oO': '\mathscr O'
+    '\zZ': '\mathscr Z'
+    '\bP': '\mathbf P'
+    '\bQ': '\mathbf Q'
+    '\T': '{\intercal}'
+    '\leq': '\leqslant'
+    '\geq': '\geqslant'
+    '\phi': '\varphi'
+    '\epsilon': '\varepsilon'
+    '\matset': '\MM^{ #1 \times #2 }'
+    '\lefsd': '\preceq_{\textrm{F}}'
+    '\lessd': '\preceq_{\textrm{S}}'
+    '\argmax': '\operatornamewithlimits{argmax}'
+    '\argmin': '\operatornamewithlimits{argmin}'
+    '\st': '\;\mathrm{s.t.}\;'
+    '\setntn': '\{ #1 : #2 \}'
+    '\natset': '[ #1 ]'
+    '\given': '\, | \,'
+    '\fore': '\therefore \quad'
+    '\1': '\mathbb{1}'
+    '\me': '\mathrm{e}'
+    '\diff': '\mathop{}\!\mathrm{d}'
+    '\la': '\langle'
+    '\ra': '\rangle'
+    '\eqdist': '\stackrel{d}{=}'
+    '\iidsim': '\stackrel{\text{\tiny IID}}{\sim}'
+    '\tod': '\stackrel { d } {\to}'
+    '\tow': '\stackrel { w } {\to}'
+    '\toprob': '\stackrel { p } {\to}'
+    '\toms': '\stackrel { ms } {\to}'
+    '\inner': '\left\langle{#1}\right\rangle'
+    '\Exp': '\operatorname{Exp}'
+    '\Lip': '\operatorname{Lip}'
+    '\cl': '\operatorname{cl}'
+    '\graph': '\operatorname{graph}'
+    '\interior': '\operatorname{int}'
+    '\Prob': '\operatorname{Prob}'
+    '\determinant': '\operatorname{det}'
+    '\trace': '\operatorname{trace}'
+    '\sgn': '\operatorname{sgn}'
+    '\Span': '\operatorname{span}'
+    '\diag': '\operatorname{diag}'
+    '\proj': '\operatorname{proj}'
+    '\rank': '\operatorname{rank}'
+    '\kernel': '\operatorname{null}'
+    '\cov': '\operatorname{Cov}'
+    '\corr': '\operatorname{Corr}'
+    '\var': '\operatorname{Var}'
+    '\mse': '\operatorname{mse}'
+    '\se': '\operatorname{se}'
+    '\range': '\operatorname{range}'
+    '\dimension': '\operatorname{dim}'
+    '\epi': '\operatorname{epi}'
+    '\vecop': '\operatorname{vec}'
+    '\real': '\operatorname{Re}'
+    '\imag': '\operatorname{Im}'
+    '\csum': '\operatorname{colsum}'
+    '\rsum': '\operatorname{rowsum}'
+
+site:
+  template: book-theme
+  options:
+    style: fancy-lists.css
+    # base_url comes from BASE_URL in the deploy workflow
+  parts:
+    footer: |
+      © Thomas J. Sargent and John Stachurski. The final version of *Economic
+      Networks: Theory and Computation* is published by
+      [Cambridge University Press](https://www.cambridge.org/core/books/economic-networks/2684D7986C7E48A82A762DFEEEA49B46)
+      (2024). Available for indexing, text and data mining, and AI model
+      training, with attribution.

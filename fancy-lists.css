@@ -1,0 +1,70 @@
+/* Fancy ordered-list markers under the stock book-theme (interim, until the
+ * QuantEcon book theme renders list style itself).
+ *
+ * fancy-lists.mjs wraps each styled list in
+ *   <div class="fancy-list list-<style> delimiter-<delimiter>">
+ * and these rules draw its markers. They follow quantecon-theme.mystmd's
+ * styles/lists.css, keyed on the wrapper instead of the <ol>.
+ */
+.fancy-list.list-lower-alpha > ol {
+  list-style-type: lower-alpha;
+}
+.fancy-list.list-upper-alpha > ol {
+  list-style-type: upper-alpha;
+}
+.fancy-list.list-lower-roman > ol {
+  list-style-type: lower-roman;
+}
+.fancy-list.list-upper-roman > ol {
+  list-style-type: upper-roman;
+}
+
+/* `(a)` and `a)` have no native list-style. Hide the marker and draw one from
+ * the built-in list-item counter (which honours <ol start>), in the padding
+ * gutter so wrapped lines stay aligned like native markers. */
+.fancy-list.delimiter-parens > ol,
+.fancy-list.delimiter-paren > ol {
+  list-style: none;
+}
+.fancy-list.delimiter-parens > ol > li,
+.fancy-list.delimiter-paren > ol > li {
+  position: relative;
+}
+.fancy-list.delimiter-parens > ol > li::before,
+.fancy-list.delimiter-paren > ol > li::before {
+  position: absolute;
+  left: -0.4em;
+  transform: translateX(-100%);
+  white-space: nowrap;
+}
+.fancy-list.list-lower-alpha.delimiter-parens > ol > li::before {
+  content: '(' counter(list-item, lower-alpha) ')';
+}
+.fancy-list.list-lower-alpha.delimiter-paren > ol > li::before {
+  content: counter(list-item, lower-alpha) ')';
+}
+.fancy-list.list-upper-alpha.delimiter-parens > ol > li::before {
+  content: '(' counter(list-item, upper-alpha) ')';
+}
+.fancy-list.list-upper-alpha.delimiter-paren > ol > li::before {
+  content: counter(list-item, upper-alpha) ')';
+}
+.fancy-list.list-lower-roman.delimiter-parens > ol > li::before {
+  content: '(' counter(list-item, lower-roman) ')';
+}
+.fancy-list.list-lower-roman.delimiter-paren > ol > li::before {
+  content: counter(list-item, lower-roman) ')';
+}
+.fancy-list.list-upper-roman.delimiter-parens > ol > li::before {
+  content: '(' counter(list-item, upper-roman) ')';
+}
+.fancy-list.list-upper-roman.delimiter-paren > ol > li::before {
+  content: counter(list-item, upper-roman) ')';
+}
+
+/* Figures are drawn for a white page (TikZ and xfig diagrams, matplotlib
+   plots with transparent backgrounds). If a reader switches to the dark
+   theme, keep them on white so they stay legible. */
+html.dark article img {
+  background-color: #fff;
+}
