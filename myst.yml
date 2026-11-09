@@ -6,9 +6,32 @@ project:
   plugins:
     - fancy-lists.mjs
   title: "Economic Networks: Theory and Computation"
+  description: >-
+    An introduction to economic networks for students and researchers in
+    economics and applied mathematics, emphasizing quantitative modeling with
+    graph theory, linear algebra, fixed point theory and programming.
+  keywords:
+    - economic networks
+    - network science
+    - graph theory
+    - production networks
+    - optimal transport
+    - Markov chains
+    - financial networks
+    - quantitative economics
   authors:
     - name: Thomas J. Sargent
+      affiliations:
+        - New York University
     - name: John Stachurski
+      affiliations:
+        - National Graduate Institute for Policy Studies (GRIPS)
+  # The Cambridge University Press edition; the theme shows it on every page.
+  doi: 10.1017/9781009456340
+  subject: Economics
+  venue:
+    title: QuantEcon
+    url: https://quantecon.org
   # The LaTeX source is private: the GitHub link points at the public repo
   # the site is published from, and there is no edit link.
   github: https://github.com/QuantEcon/book-networks.mystmd
